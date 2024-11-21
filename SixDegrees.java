@@ -1,10 +1,5 @@
+package bacon;
 
-/**
- * Write a description of class SixsGraph here.
- *
- * @author (your name)
- * @version (a version number or a date)
- */
 import java.util.List;
 import java.util.Set;
 import java.io.FileReader;
@@ -19,8 +14,9 @@ import java.util.LinkedList;
 
 public class SixDegrees {
 
-    //Aca algun atributo del tipo grafo
+    //Grafo que contiene a las peliculas y actores
     private GraphList grafo;
+
     /**
      * @post Construye una instancia de SixDegrees con la información contenida en la base de datos fileName.
      * @param fileName el nombre de un archivo que contine nombres de películas y sus respectivos actores y actrices.
@@ -28,40 +24,30 @@ public class SixDegrees {
      */
     public SixDegrees(String fileName, String delimiter) {
         
-        
         grafo = new GraphList<>();
         lectorArchivo(fileName, delimiter);
-        //crear un grafo grafo = new ;
-        //añadirverticesdelarchivo(filename, delimiter)
-        
-        //pasar archivo texto-- 
-        
-        //para cada linea, leer cada linea
-        //separar palabras
-        //un vertice para cada palabra
-        //primer nodo conecta con los otros
-        //un string de peli
-        //una lista de actores
-        //para cada actor en actores hago una arista de pelicula a actor y de actor a pelicula
     }
     
+    /**
+     * @post lee un archivo linea a linea, con la información dada se crea un grafo
+     */
     private void lectorArchivo(String fileName, String delimiter)
     {
-        // initialise instance variables
         try (BufferedReader ready = new BufferedReader(new FileReader(fileName))) {
             String line;
             while ((line = ready.readLine()) != null) {
                 String[] palabras = line.split(delimiter);
                 agregarVertices(palabras);
-                //agregarListaVertices
-                //
-                //          agrego arista entre palabra y pelicuSystem.out.println(Arrays.toString(palabras));
             }
         } catch (IOException e) {
             System.out.println("Ocurrió un error");
         }
     }
     
+    /**
+     * @post Dado un arreglo de palabras, si no existen, las agrega al grado. 
+     * Genera también aristas entre la primera palabra y el resto de las palabras
+     */
     private void agregarVertices(String[] palabras){
         String pelicula = palabras[0];
         if (!grafo.containsVertex(pelicula)){
@@ -105,6 +91,9 @@ public class SixDegrees {
      *       (i+1), si act2 esta relacionado/a con algun actor o actriz que tiene distancia i con act1.
      */
     public int degreesOfSeparation(String act1, String act2){
+        if(!grafo.containsVertex(act1) || !grafo.containsVertex(act2))
+            throw new IllegalArgumentException("El actor no existe");
+        
         //grafo.buscardistanci = act1
         return 0; 
         //devuelve -1 si no hay camino
@@ -116,6 +105,9 @@ public class SixDegrees {
      * @post Retorna la lista de actores y actrices involucrados en el camino para obtener la menor distancia de act1 a act2.
      */
     public List<String> pathOfSeparation(String act1, String act2) {
+        if(!grafo.containsVertex(act1) || !grafo.containsVertex(act2))
+            throw new IllegalArgumentException("El actor no existe");
+        //
         return null;
     }
 
